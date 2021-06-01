@@ -1,11 +1,18 @@
 package com.example.afinal;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TableLayout;
+import android.widget.Toast;
 
 import com.google.android.material.tabs.TabLayout;
 
@@ -16,6 +23,11 @@ public class MainActivity extends FragmentActivity {
     HomeFragment fragment_home;
     FeastFragment fragment_feast;
     ReviewFragment fragment_review;
+
+    private DrawerLayout drawerLayout;
+    private View drawerView;
+    Button go;
+    EditText id, pw;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,5 +70,41 @@ public class MainActivity extends FragmentActivity {
 
             }
         });
+
+        drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+        drawerView = (View) findViewById(R.id.drawerView);
+        drawerLayout.setDrawerListener(listener);
+
+        go = (Button)findViewById(R.id.go);
+        id = (EditText)findViewById(R.id.et_id);
+        pw = (EditText)findViewById(R.id.et_pw);
+
+        go.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if((id.getText().toString().equals("kim")) && (pw.getText().toString().equals("1234"))){
+                    Toast.makeText(getApplicationContext(),"환영합니다.",Toast.LENGTH_SHORT).show();
+                }
+                else
+                    Toast.makeText(getApplicationContext(),"ID, PW를 확인하세요.",Toast.LENGTH_SHORT).show();
+            }
+        });
     }
+    DrawerLayout.DrawerListener listener = new DrawerLayout.DrawerListener() {
+        @Override
+        public void onDrawerSlide(@NonNull View drawerView, float slideOffset) {
+        }
+
+        @Override
+        public void onDrawerOpened(@NonNull View drawerView) {
+        }
+
+        @Override
+        public void onDrawerClosed(@NonNull View drawerView) {
+        }
+
+        @Override
+        public void onDrawerStateChanged(int newState) {
+        }
+    };
 }
