@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<font-family xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:ignore="UnusedAttribute,ResourceCycle">
+
+
+    <font
+
+        android:fontStyle="normal"
+        android:fontWeight="300"
+        app:font="@font/lottemedium"
+        app:fontStyle="normal"
+        app:fontWeight="300" />
+
+    <font
+
+        android:fontStyle="normal"
+        android:fontWeight="500"
+        app:font="@font/lottebold"
+        app:fontStyle="normal"
+        app:fontWeight="500" />
+
+    <font
+
+        android:fontStyle="normal"
+        android:fontWeight="1000"
+        app:font="@font/lottelight"
+        app:fontStyle="normal"
+        app:fontWeight="1000" />
+
+</font-family>
