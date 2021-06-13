@@ -43,10 +43,10 @@
     <Button
         android:id="@+id/reset"
         android:layout_width="70dp"
-
         android:layout_height="50dp"
         android:background="#ED7272"
-        android:text="뒤"
+        android:text="지도\n초기화"
+        android:textSize="12sp"
         app:backgroundTint="#426ff8"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"

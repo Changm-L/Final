@@ -3,6 +3,7 @@ package com.example.afinal;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.location.Geocoder;
@@ -29,14 +30,17 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.UiSettings;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
+import org.jetbrains.annotations.NotNull;
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserFactory;
 
 import java.io.StringReader;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
 
 public class Main_map extends AppCompatActivity implements OnMapReadyCallback {
     HashMap<String, LatLng> list = new HashMap<>();
@@ -57,7 +61,7 @@ public class Main_map extends AppCompatActivity implements OnMapReadyCallback {
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
         search = (Button) findViewById(R.id.search);
-        reset = (Button)findViewById(R.id.reset);
+        reset = (Button) findViewById(R.id.reset);
         tv = (TextView) findViewById(R.id.textView);
         edit = (EditText) findViewById(R.id.editTextTextPersonName);
 
@@ -67,18 +71,26 @@ public class Main_map extends AppCompatActivity implements OnMapReadyCallback {
             @Override
             public void onResponse(String response) {
                 getLatLng(response);
-                BitmapDrawable bitmapDrawable = (BitmapDrawable)getResources().getDrawable(R.drawable.lbrymarker);
+
+                BitmapDrawable bitmapDrawable = (BitmapDrawable) getResources().getDrawable(R.drawable.lbrymarker);
                 Bitmap bitmap = bitmapDrawable.getBitmap();
                 Bitmap smallMarker = Bitmap.createScaledBitmap(bitmap, 150, 150, false);
-                for (LatLng location : locationList
-                ) {
+
+                for (String str : list.keySet()) {
                     myMap.addMarker(new MarkerOptions()
-                            .position(location)
+                            .position(list.get(str))
                             .icon(BitmapDescriptorFactory.fromBitmap(smallMarker))
-
-                            .title("도서관"));
-
+                            .title(getKey(list, list.get(str))));
                 }
+
+                myMap.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener() {
+                    @Override
+                    public void onInfoWindowClick(@NonNull @NotNull Marker marker) {
+                        Intent intent = new Intent(Main_map.this, SubActivity.class);
+                        startActivity(intent);
+                    }
+                });
+
             }
         }, new Response.ErrorListener() {
             @Override
@@ -91,7 +103,7 @@ public class Main_map extends AppCompatActivity implements OnMapReadyCallback {
         search.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                BitmapDrawable bitmapDrawable = (BitmapDrawable)getResources().getDrawable(R.drawable.lbrymarker);
+                BitmapDrawable bitmapDrawable = (BitmapDrawable) getResources().getDrawable(R.drawable.lbrymarker);
                 Bitmap bitmap = bitmapDrawable.getBitmap();
                 Bitmap smallMarker = Bitmap.createScaledBitmap(bitmap, 150, 150, false);
 
@@ -100,45 +112,66 @@ public class Main_map extends AppCompatActivity implements OnMapReadyCallback {
                 myMap.moveCamera(CameraUpdateFactory.newLatLngZoom(list.get(edit.getText().toString()), 14));
                 MarkerOptions markerOptions = new MarkerOptions();
                 markerOptions.position(list.get(edit.getText().toString()))
-                        .title(edit.getText().toString())
+                        .title(getKey(list, list.get(edit.getText().toString())))
                         .icon(BitmapDescriptorFactory.fromBitmap(smallMarker));
                 myMap.addMarker(markerOptions);
 
-                img1.setOnClickListener(new View.OnClickListener() {
+                myMap.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener() {
                     @Override
-                    public void onClick(View v) {
-
+                    public void onInfoWindowClick(@NonNull @NotNull Marker marker) {
+                        Intent intent = new Intent(Main_map.this, SubActivity.class);
+                        startActivity(intent);
                     }
                 });
+
             }
         });
         reset.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 myMap.clear();
-                BitmapDrawable bitmapDrawable = (BitmapDrawable)getResources().getDrawable(R.drawable.lbrymarker);
+                BitmapDrawable bitmapDrawable = (BitmapDrawable) getResources().getDrawable(R.drawable.lbrymarker);
                 Bitmap bitmap = bitmapDrawable.getBitmap();
                 Bitmap smallMarker = Bitmap.createScaledBitmap(bitmap, 150, 150, false);
-                for (LatLng location : locationList
-                ) {
+                for (String str : list.keySet()) {
                     myMap.addMarker(new MarkerOptions()
-                            .position(location)
+                            .position(list.get(str))
                             .icon(BitmapDescriptorFactory.fromBitmap(smallMarker))
-                            .title("도서관"));
-
+                            .title(getKey(list, list.get(str))));
                 }
+                myMap.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener() {
+                    @Override
+                    public void onInfoWindowClick(@NonNull @NotNull Marker marker) {
+                        Intent intent = new Intent(Main_map.this, SubActivity.class);
+                        startActivity(intent);
+                    }
+                });
+
             }
         });
 
 
     }
 
+
+
+    public static <K, V> K getKey(Map<K, V> map, V value) {
+
+        for (K key : map.keySet()) {
+            if (value.equals(map.get(key))) {
+                return key;
+            }
+        }
+        return null;
+    }
+
     @Override
     public void onMapReady(@NonNull GoogleMap googleMap) {
         UiSettings uiSettings = googleMap.getUiSettings();
         myMap = googleMap;
-        myMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(37.56644, 126.97792),14));
+        myMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(37.56644, 126.97792), 14));
         uiSettings.setZoomControlsEnabled(true);
+
 
 
     }
@@ -146,11 +179,10 @@ public class Main_map extends AppCompatActivity implements OnMapReadyCallback {
 
     public void getLatLng(String data) {
         try {
-            Log.d("===========", data);
+
             XmlPullParserFactory factory = XmlPullParserFactory.newInstance();
             factory.setNamespaceAware(true);
             XmlPullParser xpp = factory.newPullParser();
-
             xpp.setInput(new StringReader(data));
 
             int eventType = xpp.getEventType();
@@ -159,7 +191,7 @@ public class Main_map extends AppCompatActivity implements OnMapReadyCallback {
             int count = 0;
             while (eventType != XmlPullParser.END_DOCUMENT) {
                 int i = 0;
-                Log.d("와일 시작>>>>>>>", data);
+
                 if (eventType == XmlPullParser.START_TAG) {
                     if (xpp.getName().equals("LBRRY_NAME")) nameFlag = true;
                     if (xpp.getName().equals("XCNTS")) latFlag = true;
@@ -167,17 +199,14 @@ public class Main_map extends AppCompatActivity implements OnMapReadyCallback {
                 } else if (eventType == XmlPullParser.TEXT) {
                     if (latFlag) {
                         lat = Double.parseDouble(xpp.getText());
-                        Log.d("lat===== ", xpp.getText());
                         latFlag = false;
                         count++;
                     } else if (lanFlag) {
                         lon = Double.parseDouble(xpp.getText());
-                        Log.d("long===== ", xpp.getText());
                         lanFlag = false;
                         count++;
                     } else if (nameFlag) {
                         name = xpp.getText();
-                        Log.d("name===== ", xpp.getText());
                         nameFlag = false;
                         count++;
 
@@ -185,8 +214,6 @@ public class Main_map extends AppCompatActivity implements OnMapReadyCallback {
                 }
                 if (count == 3) {
                     LatLng latLng = new LatLng(lat, lon);
-
-                    //Toast.makeText(getApplicationContext(), "OK", Toast.LENGTH_SHORT).show();
                     list.put(name, latLng);
                     locationList.add(latLng);
                     count = 0;
@@ -199,4 +226,7 @@ public class Main_map extends AppCompatActivity implements OnMapReadyCallback {
         Log.i("passing", "파싱완료");
 
     }
+
+
+
 }
