@@ -14,6 +14,7 @@ public class MainActivity extends AppCompatActivity {
 
     ImageView imgv1;
     ImageView imgv2;
+    ImageView imgv3;
     private DrawerLayout drawerLayout;
     private View drawerView;
 
@@ -24,10 +25,20 @@ public class MainActivity extends AppCompatActivity {
 
         imgv1 = findViewById(R.id.imageView9);
         imgv2 = findViewById(R.id.imageView6);
+        imgv3 = findViewById(R.id.imageView23);
+
         imgv1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getApplicationContext(), SubActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        imgv3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), Main_map.class);
                 startActivity(intent);
             }
         });

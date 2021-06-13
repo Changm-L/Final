@@ -11,6 +11,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -46,6 +47,7 @@ public class Main_map extends AppCompatActivity implements OnMapReadyCallback {
     String name = "";
     GoogleMap myMap;
     double lat = 0, lon = 0;
+    ImageView img1;
 
 
     @Override
@@ -60,7 +62,7 @@ public class Main_map extends AppCompatActivity implements OnMapReadyCallback {
         edit = (EditText) findViewById(R.id.editTextTextPersonName);
 
         RequestQueue requestQueue = Volley.newRequestQueue(this);
-        String url = "http://openapi.seoul.go.kr:8088/456d44417463686139346966477247/xml/SeoulPublicLibraryInfo/1/500/";
+        String url = "http://openapi.seoul.go.kr:8088/456d44417463686139346966477247/xml/SeoulPublicLibraryInfo/1/50/";
         StringRequest stringRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
@@ -102,6 +104,12 @@ public class Main_map extends AppCompatActivity implements OnMapReadyCallback {
                         .icon(BitmapDescriptorFactory.fromBitmap(smallMarker));
                 myMap.addMarker(markerOptions);
 
+                img1.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+
+                    }
+                });
             }
         });
         reset.setOnClickListener(new View.OnClickListener() {
@@ -178,7 +186,7 @@ public class Main_map extends AppCompatActivity implements OnMapReadyCallback {
                 if (count == 3) {
                     LatLng latLng = new LatLng(lat, lon);
 
-                    Toast.makeText(getApplicationContext(), "OK", Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(getApplicationContext(), "OK", Toast.LENGTH_SHORT).show();
                     list.put(name, latLng);
                     locationList.add(latLng);
                     count = 0;

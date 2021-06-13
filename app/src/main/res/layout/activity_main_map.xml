@@ -20,43 +20,42 @@
         android:id="@+id/editTextTextPersonName"
         android:layout_width="0dp"
         android:layout_height="60dp"
-        android:layout_marginBottom="540dp"
         android:ems="10"
-        android:hint="도서관이름 검색"
+        android:hint="이름 검색"
         android:inputType="textPersonName"
         android:shadowColor="#F3EFEF"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/search"
         app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/reset" />
+        app:layout_constraintStart_toEndOf="@+id/reset"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <Button
         android:id="@+id/search"
-        android:layout_width="186dp"
-        android:layout_height="60dp"
-        android:layout_marginBottom="540dp"
-        android:background="#F6C2C2"
+        android:layout_width="70dp"
+        android:layout_height="50dp"
+        android:background="#426ff8"
         android:text="검색"
-        app:backgroundTint="#ECC4C4"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:textStyle="bold"
+        app:backgroundTint="#426ff8"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/reset" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <Button
         android:id="@+id/reset"
-        android:layout_width="0dp"
+        android:layout_width="70dp"
 
-        android:layout_height="60dp"
-        android:layout_marginTop="32dp"
+        android:layout_height="50dp"
         android:background="#ED7272"
-        android:text="초기화"
-        app:backgroundTint="#ED7272"
-        app:layout_constraintBottom_toTopOf="@+id/editTextTextPersonName"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
+        android:text="뒤"
+        app:backgroundTint="#426ff8"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:strokeColor="#F46565" />
+        app:strokeColor="#426ff8" />
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="116dp"
+        android:layout_height="wrap_content"
+        tools:layout_editor_absoluteX="138dp"
+        tools:layout_editor_absoluteY="225dp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
